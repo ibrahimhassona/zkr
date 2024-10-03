@@ -5,7 +5,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
+    /* لون النص الأساسي */
+  
+    /* ألوان الأساس */
+    --primary: #34db5e;      /* اللون الأساسي */
+    --primary-dark: #4bb929; /* اللون الأساسي الغامق */
+    --primary-light: #5de273; /* اللون الأساسي الفاتح */
+  
+    /* الألوان الثانوية */
+    --secondary: #e74c3c;    /* اللون الثانوي */
+    --secondary-dark: #c0392b; /* اللون الثانوي الغامق */
+    --secondary-light: #f1948a; /* اللون الثانوي الفاتح */
+  }
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -29,4 +41,10 @@ body {
 
 .test{
   @apply text-red-600
+}
+.container {
+  @apply px-[5rem]
+}
+.cust-trans{
+  @apply transition-all duration-300
 }
