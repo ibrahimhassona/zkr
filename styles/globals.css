@@ -42,8 +42,8 @@ body {
 .test{
   @apply text-red-600
 }
-.container {
-  @apply px-[5rem]
+.cont {
+  @apply px-[5rem] max-md:px-0
 }
 .cust-trans{
   @apply transition-all duration-300

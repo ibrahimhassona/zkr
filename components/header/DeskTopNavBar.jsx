@@ -8,9 +8,9 @@ const DeskTopNavBar = ({ links }) => {
     const linkStyle = 'cust-trans hover:text-primary'
     const router = usePathname()
     const routerpath = router.split('/'[1])
-    console.log("url",router.split('/')[1])
+    console.log("url", router.split('/')[1])
     return (
-        <div className=' flex flex-row items-center justify-between container bg-white shadow-sm'>
+        <div className=' flex flex-row items-center justify-between cont bg-white shadow-sm m-auto'>
             {/* ---------- Logo ---------- */}
             <Image
                 src="/zkr.png"
@@ -22,7 +22,7 @@ const DeskTopNavBar = ({ links }) => {
             {/* ------- Pages Links -------- */}
             <div className='flex items-center gap-4'>
                 {links.map((link, index) => (
-                    <Link key={index} href={link.href} className={`${linkStyle} ${routerpath==link.href?'text-primary':''}`}>
+                    <Link key={index} href={link.href} className={`${linkStyle} ${routerpath == link.href ? 'text-primary' : ''}`}>
                         {link.label}
                     </Link>
                 ))}

@@ -6,9 +6,9 @@ import DeskTopNavBar from './DeskTopNavBar';
 
 const links = [
     { href: '/endPray', label: 'خَتْمُ الصَّلَاةِ' },
-    { href: '/', label: 'تَعْلِيمُ الصَّلَاةِ' },
-    { href: '/', label: 'سُنَنٌ مُؤَكَّدَةٌ' },
-    { href: '/', label: 'مَوَاقِيتُ الصَّلَاةِ' },
+    { href: '/learnPray', label: 'تَعْلِيمُ الصَّلَاةِ' },
+    { href: '/SonanMoakdah', label: 'سُنَنٌ مُؤَكَّدَةٌ' },
+    { href: '/prayTimes', label: 'مَوَاقِيتُ الصَّلَاةِ' },
 ];
 const Nav = () => {
 
