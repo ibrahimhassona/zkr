@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import DeskTopNavBar from "@/components/header/DeskTopNavBar";
 import { Cairo, Roboto } from "next/font/google";
+import Nav from "@/components/header/Nav";
 
 // ---- Google Fonts ------
 const cairo = Cairo({ subsets: ["arabic"], weight: ["400", "700"] });
@@ -25,7 +25,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body className={locale === 'ar' ? cairo.className : roboto.className ` test`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <DeskTopNavBar />
+          <Nav />
           {children}
         </NextIntlClientProvider>
       </body>
