@@ -10,7 +10,7 @@ const PopupAlert = ({ isVisible, onClose }) => {
             <MdClose 
                 onClick={onClose} // Use the passed onClose function
                 className='absolute top-1 right-1 cust-trans hover:text-secondary-dark cursor-pointer text-secondary shadow-sm rounded-sm' 
-                size={20} 
+                size={30} 
             />
             <div className='flex items-center gap-2'>
                 <p className='text-primary-dark font-bold'>أَتْمَمْتُ خَتْمَ الصَّلَاةِ، تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ</p>
