@@ -1,13 +1,21 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { endPrayData } from "@/utils/endPray";
+import PopupAlert from "./PopupAlert";
 
 const DeskTopEndPray = () => {
   const [currentData, setCurrentData] = useState(endPrayData[0]);
   const [count, setCount] = useState(1);
   const [index, setIndex] = useState(0); // Using state for index
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
+  const handlePopupClose = () => {
+    setIsPopupVisible(false); // This function will hide the popup
+  };
   const handleButtonClick = () => {
+    if (index == endPrayData.length-1) {
+      setIsPopupVisible(true)
+    }
     // Ensure endPrayData exists and has elements
     if (endPrayData && endPrayData.length > 0) {
       const currentItem = endPrayData[index];
@@ -40,11 +48,10 @@ const DeskTopEndPray = () => {
         </span>
         <div
           className={` p-4 
-        ${
-          currentData.count > 1
-            ? "flex items-start gap-3 flex-wrap"
-            : "flex flex-col-reverse"
-        }`}
+        ${currentData.count > 1
+              ? "flex items-start gap-3 flex-wrap"
+              : "flex flex-col-reverse"
+            }`}
         >
           {Array.from({ length: count }).map((_, index) => (
             <span
@@ -78,17 +85,19 @@ const DeskTopEndPray = () => {
         {endPrayData.map((item) => (
           <div className="flex item-center w-full" key={item.id}>
             <span
-              className={`cust-trans ${
-                currentData.id >= item.id
-                  ? "text-primary-dark"
-                  : "text-gray-400"
-              }`}
+              className={`cust-trans ${currentData.id >= item.id
+                ? "text-primary-dark"
+                : "text-gray-400"
+                }`}
             >
               {`${item.id}- ${item.title}${" "}(${item.count})`}
             </span>
           </div>
         ))}
       </div>
+      {isPopupVisible && (
+        <PopupAlert isVisible={isPopupVisible} onClose={handlePopupClose} />
+      )}
     </div>
   );
 };
