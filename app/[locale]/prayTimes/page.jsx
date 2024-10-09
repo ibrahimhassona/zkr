@@ -1,8 +1,12 @@
+import PrayerTimes from '@/components/timesPray/PrayerTimes'
 import React from 'react'
 
 const page = () => {
   return (
-    <div className='text-primary h-[calc(100vh-70px)] font-bold flex items-center justify-center'>تَحْتَ الْأِنْشَاءِ </div>
+    <div className='cont'>
+      <h1 className='text-primary-dark font-bold w-full text-center text-xl py-4'>مَواقيتُ الصَّلاةِ</h1>
+      <PrayerTimes />
+    </div>
   )
 }
 
