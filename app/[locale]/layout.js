@@ -4,6 +4,7 @@ import { getMessages } from 'next-intl/server';
 import { Cairo, Roboto } from "next/font/google";
 import Nav from "@/components/header/Nav";
 import MobileMenu from "@/components/header/MobileMenu";
+import Providers from "../providers";
 
 // ---- Google Fonts ------
 const cairo = Cairo({ subsets: ["arabic"], weight: ["400", "700"] });
@@ -25,10 +26,12 @@ export default async function LocaleLayout({ children, params: { locale } }) {
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body className={locale === 'ar' ? cairo.className : roboto.className ` test` `bg-white`}>
+      <Providers>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Nav />
           {children}
         </NextIntlClientProvider>
+      </Providers>
       </body>
     </html>
   );
