@@ -1,13 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { endPrayData } from "@/utils/endPray";
+import {  getEndPrayData } from "@/utils/endPray";
 import PopupAlert from "./PopupAlert";
 
-const DeskTopEndPray = () => {
+
+const DeskTopEndPray = ({currentPrayer}) => {
+  const endPrayData = getEndPrayData(currentPrayer.name)
   const [currentData, setCurrentData] = useState(endPrayData[0]);
   const [count, setCount] = useState(1);
   const [index, setIndex] = useState(0); // Using state for index
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+
   let compleated = index == endPrayData.length - 1
   const handlePopupClose = () => {
     setIsPopupVisible(false); // This function will hide the popup
@@ -39,6 +42,8 @@ const DeskTopEndPray = () => {
     console.log("Count ===>", count);
     console.log("Index ===>", index);
   };
+  console.log("currentPrayer ===>", currentPrayer);
+  currentPrayer
   return (
     <div className="grid grid-cols-3 gap-2 h-[calc(100vh-(70px+4rem))] max-lg:hidden ">
       {/* ============ Progress Section ============ */}

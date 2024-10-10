@@ -3,7 +3,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className='cont'>
+    <div className='cont bg-white'>
       <h1 className='text-primary-dark font-bold w-full text-center text-xl py-4'>مَواقيتُ الصَّلاةِ</h1>
       <PrayerTimes />
     </div>

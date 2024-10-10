@@ -1,8 +1,9 @@
-"use client";
-
+"use client"
+import React, { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useState, useEffect, useMemo } from 'react';
-import CurrentPrayer from './CurrentPrayer';
+import { useDispatch } from 'react-redux';
+import { setCurrentPrayer } from '@/redux/slices/prayerTimesSlice';
+
 
 // تعريف البيانات الثابتة للدول والمدن
 const countries = {
@@ -94,36 +95,32 @@ const parseTime = (timeString, date) => {
 };
 
 export default function PrayerTimes() {
-  // استخدام localStorage لحفظ اختيارات المستخدم
+  const dispatch = useDispatch();
   const [selectedCountry, setSelectedCountry] = useLocalStorage('country', 'SA');
   const [selectedCity, setSelectedCity] = useLocalStorage('city', 'جدة');
   const [currentDate, setCurrentDate] = useState(() => new Date());
 
-  // استخدام React Query لجلب البيانات
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ['prayerTimes', selectedCity, selectedCountry],
     queryFn: () => fetchPrayerTimes(countries[selectedCountry].cities[selectedCity], selectedCountry),
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 60, // تحديث كل ساعة
+    staleTime: 1000 * 60 * 60,
     retry: 3,
     onError: (error) => {
       console.error('Error fetching prayer times:', error);
     }
   });
 
-  // تحديث الوقت الحالي كل ثانية
   useEffect(() => {
     const timer = setInterval(() => setCurrentDate(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // معالجة تغيير المدينة
   const handleCityChange = (e) => {
     setSelectedCity(e.target.value);
     refetch();
   };
   
-  // معالجة تغيير الدولة
   const handleCountryChange = (e) => {
     const newCountry = e.target.value;
     setSelectedCountry(newCountry);
@@ -131,7 +128,6 @@ export default function PrayerTimes() {
     refetch();
   };
 
-  // حساب أوقات الصلاة
   const prayerTimes = useMemo(() => {
     if (!data || !data.data || !data.data.timings || !data.data.date) return null;
 
@@ -147,14 +143,29 @@ export default function PrayerTimes() {
       .sort((a, b) => a.time - b.time);
   }, [data]);
 
-  // حساب الصلاة القادمة والوقت المتبقي لها
+  const currentPrayer = useMemo(() => {
+    if (!prayerTimes) return null;
+
+    const now = currentDate;
+    return prayerTimes.reduce((prev, current) => {
+      if (current.time <= now) return current;
+      return prev;
+    }, prayerTimes[prayerTimes.length - 1]);
+  }, [prayerTimes, currentDate]);
+
+  useEffect(() => {
+    if (currentPrayer) {
+      dispatch(setCurrentPrayer({ name: currentPrayer.name, time: currentPrayer.time.toLocaleTimeString() }));
+    }
+  }, [currentPrayer, dispatch]);
+
   const nextPrayer = useMemo(() => {
     if (!prayerTimes) return null;
 
     const now = currentDate;
     const nextPrayer = prayerTimes.find(prayer => prayer.time > now) || prayerTimes[0];
     let timeDiff = nextPrayer.time - now;
-    if (timeDiff < 0) timeDiff += 24 * 60 * 60 * 1000; // إضافة يوم كامل إذا كانت الصلاة القادمة في اليوم التالي
+    if (timeDiff < 0) timeDiff += 24 * 60 * 60 * 1000;
 
     const hours = Math.floor(timeDiff / (1000 * 60 * 60));
     const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
@@ -163,10 +174,8 @@ export default function PrayerTimes() {
     return { ...nextPrayer, remaining: { hours, minutes, seconds } };
   }, [prayerTimes, currentDate]);
 
-  // عرض حالة التحميل
   if (isLoading) return <p className="text-center">جارٍ جَلْبِ أَوْقَاتِ الصَّلَاةِ...</p>;
   
-  // عرض حالة الخطأ
   if (error) return (
     <div className="text-center text-red-500">
       <p>حدث خطأ أثناء جلب أوقات الصلاة</p>
@@ -174,13 +183,11 @@ export default function PrayerTimes() {
     </div>
   );
 
-  // عرض واجهة المستخدم الرئيسية
   return (
-    <div className="max-w-md mx-auto p-4">
-      {/* عرض معلومات الصلاة القادمة */}
+    <div className="max-w-md mx-auto p-4 text-custGray">
       {nextPrayer && (
         <div className="text-center mb-4">
-          <p className="text-lg font-semibold">الصلاة القادمة: {nextPrayer.name}</p>
+          <p className="text-lg font-semibold bg-green-50 rounded-sm py-2">الصلاة القادمة: <span className='text-primary-dark'>{nextPrayer.name}</span></p>
           <p className="text-xl">
             {String(nextPrayer.remaining.hours).padStart(2, '0')}:
             {String(nextPrayer.remaining.minutes).padStart(2, '0')}:
@@ -188,10 +195,9 @@ export default function PrayerTimes() {
           </p>
         </div>
       )}
-      {/* اختيار الدولة والمدينة */}
       <div className='flex items-center justify-between gap-2 mb-4'>
         <select 
-          className='border rounded-sm w-full p-2' 
+          className='border rounded-sm w-full p-1 bg-green-50 text-primary-dark font-bold' 
           value={selectedCountry} 
           onChange={handleCountryChange}
         >
@@ -200,7 +206,7 @@ export default function PrayerTimes() {
           ))}
         </select>
         <select 
-          className='border rounded-sm w-full p-2' 
+          className='border rounded-sm w-full p-1 bg-green-50 text-primary-dark font-bold' 
           value={selectedCity} 
           onChange={handleCityChange}
         >
@@ -209,11 +215,10 @@ export default function PrayerTimes() {
           ))}
         </select>
       </div>
-      {/* عرض قائمة أوقات الصلوات */}
       {prayerTimes ? (
         <ul className='space-y-2'>
           {prayerTimes.map((prayer, index) => (
-            <li key={index} className={`p-2 rounded ${nextPrayer && prayer.name === nextPrayer.name ? 'bg-blue-100' : ''}`}>
+            <li key={index} className={`p-2 rounded cust-trans ${currentPrayer && prayer.name === currentPrayer.name ? 'bg-red-100' : ''} ${nextPrayer && prayer.name === nextPrayer.name ? 'bg-green-100' : ''}`}>
               <span className="font-semibold">{prayer.name}:</span>{' '}
               {prayer.time.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })}
             </li>
@@ -222,8 +227,6 @@ export default function PrayerTimes() {
       ) : (
         <p className="text-center text-red-500">لا توجد بيانات متاحة. يرجى المحاولة مرة أخرى لاحقًا.</p>
       )}
-          {/* {prayerTimes && <CurrentPrayer prayerTimes={prayerTimes} />} */}
-
     </div>
   );
 }
