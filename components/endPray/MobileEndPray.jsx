@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { endPrayData } from "@/utils/endPray";
+import { getEndPrayData } from "@/utils/endPray";
 import PopupAlert from "./PopupAlert";
 
-const MobileEndPray = () => {
+const MobileEndPray = ({currentPrayer}) => {
+  const endPrayData = getEndPrayData(currentPrayer.name)
   const [currentData, setCurrentData] = useState(endPrayData[0]);
   const [count, setCount] = useState(1);
   const [index, setIndex] = useState(0); // Using state for index
