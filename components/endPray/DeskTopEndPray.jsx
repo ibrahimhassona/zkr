@@ -10,8 +10,7 @@ const DeskTopEndPray = ({currentPrayer}) => {
   const [count, setCount] = useState(1);
   const [index, setIndex] = useState(0); // Using state for index
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-
-  let compleated = index == endPrayData.length - 1
+  let compleated = index == endPrayData.length - 1 && endPrayData[index].count == count;
   const handlePopupClose = () => {
     setIsPopupVisible(false); // This function will hide the popup
   };

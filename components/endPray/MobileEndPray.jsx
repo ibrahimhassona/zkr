@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { getEndPrayData } from "@/utils/endPray";
 import PopupAlert from "./PopupAlert";
 
-const MobileEndPray = ({currentPrayer}) => {
+const MobileEndPray = ({ currentPrayer }) => {
   const endPrayData = getEndPrayData(currentPrayer.name)
   const [currentData, setCurrentData] = useState(endPrayData[0]);
   const [count, setCount] = useState(1);
   const [index, setIndex] = useState(0); // Using state for index
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  let compleated = index == endPrayData.length - 1
-
+  let compleated = index == endPrayData.length - 1 && endPrayData[index].count == count
+  
   const handlePopupClose = () => {
     setIsPopupVisible(false); // This function will hide the popup
   };
@@ -97,9 +97,9 @@ const MobileEndPray = ({currentPrayer}) => {
           <span className='mx-1'>{`{${count}}`}</span>
         </button>
         {/* ----------- Reset ---------- */}
-        {compleated ? <button onClick={() => {setCurrentData(endPrayData[0]) ,setCount(1),setIndex(0),setIsPopupVisible(false)}} className='py-3 mb-1 px-4 w-[90%] absolute bottom-16 left-1/2 transform -translate-x-1/2 bg-primary text-white text-sm rounded-md cust-trans hover:bg-primary-dark'>إعادة خَتْمِ الصَّلَاةِ</button>:null}
+        {compleated ? <button onClick={() => { setCurrentData(endPrayData[0]), setCount(1), setIndex(0), setIsPopupVisible(false) }} className='py-3 mb-1 px-4 w-[90%] absolute bottom-16 left-1/2 transform -translate-x-1/2 bg-primary text-white text-sm rounded-md cust-trans hover:bg-primary-dark'>إعادة خَتْمِ الصَّلَاةِ</button> : null}
       </div>
-        {/* ----------- Popup {End} ---------- */}
+      {/* ----------- Popup {End} ---------- */}
       {isPopupVisible && (
         <PopupAlert isVisible={isPopupVisible} onClose={handlePopupClose} />
       )}
