@@ -16,6 +16,7 @@ module.exports = {
         "secondary-dark": "var(--secondary-dark)", // اللون الثانوي الغامق
         "secondary-light": "var(--secondary-light)", // اللون الثانوي الفاتح
         custGray:"var(--custGray)",
+        darkGray:"var(--darkGray)",
         // Background and foreground colors
         background: "var(--background)",
         foreground: "var(--foreground)",
