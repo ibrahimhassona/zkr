@@ -16,7 +16,7 @@ const PrayerSteps = ({ actions }) => {
 
     return (
         <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">خطوات الصَّلَاةِ</h2>
+            <h2 className="text-xl text-darkGray font-semibold mb-4">خطوات الصَّلَاةِ</h2>
             <div className="space-y-4 ">
                 {actions.map((step, index) => (
                     <div key={index} className="rounded-md overflow-hidden w-[60%] max-lg:w-full">
