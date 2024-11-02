@@ -30,7 +30,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Helvetica, sans-serif;
+  font-family: Cairo,Helvetica, sans-serif;
 }
 
 @layer utilities {
