@@ -26,7 +26,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
 
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
-      <body className={locale === 'ar' ? cairo.className : roboto.className` test` `bg-white`}>
+      <body className={ `${cairo.className} bg-white`}>
         <Providers>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ReduxProvider>
