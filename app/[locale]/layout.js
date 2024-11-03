@@ -9,7 +9,7 @@ import ReduxProvider from "@/redux/ReduxProvider";
 
 // ---- Google Fonts ------
 const cairo = Cairo({ subsets: ["arabic"], weight: ["400", "700"] });
-const roboto = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
+// const roboto = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
 export const metadata = {
   title: "ذَكِّرِ",

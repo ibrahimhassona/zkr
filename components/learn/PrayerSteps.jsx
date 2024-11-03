@@ -16,10 +16,10 @@ const PrayerSteps = ({ actions }) => {
 
     return (
         <section className="mb-8">
-            <h2 className="text-xl text-darkGray font-semibold mb-4">خطوات الصَّلَاةِ</h2>
+            <h2 className="text-xl text-darkGray font-semibold mb-4 w-[60%] max-lg:w-full m-auto">خطوات الصَّلَاةِ</h2>
             <div className="space-y-4 ">
                 {actions.map((step, index) => (
-                    <div key={index} className="rounded-md overflow-hidden w-[60%] max-lg:w-full">
+                    <div key={index} className="rounded-md overflow-hidden w-[60%] max-lg:w-full m-auto">
                         <div
                             onClick={() => toggleStep(index)}
                             className="flex justify-between items-center p-4 bg-gray-50 cursor-pointer hover:bg-gray-100 cust-trans"
