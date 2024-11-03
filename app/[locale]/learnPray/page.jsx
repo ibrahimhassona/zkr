@@ -6,7 +6,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="cont mx-auto px-4 py-8">
       <h1 className="text-primary-dark font-bold w-full text-center text-xl py-4">
         تَعْلِيمُ الصَّلَاةِ
       </h1>
