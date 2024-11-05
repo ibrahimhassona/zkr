@@ -42,13 +42,13 @@ const PrayerSteps = ({ actions }) => {
                                         </p>
                                     ))}
                                 </div>
-                                <Image
-                                    src={step.image}
+                                {step?.image &&<Image
+                                    src={step?.image}
                                     width={400}
                                     height={400}
                                     className="rounded-md"
                                     alt={step.name}
-                                />
+                                />}
                             </div>
                         )}
                     </div>
